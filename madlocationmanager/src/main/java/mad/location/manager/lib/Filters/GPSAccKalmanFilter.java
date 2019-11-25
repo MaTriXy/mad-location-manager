@@ -30,7 +30,7 @@ public class GPSAccKalmanFilter {
         int mesDim = useGpsSpeed ? 4 : 2;
         m_useGpsSpeed = useGpsSpeed;
 
-        m_kf = new KalmanFilter(4, mesDim, 1);
+        m_kf = new KalmanFilter(4, mesDim, 2);
         m_timeStampMsPredict = m_timeStampMsUpdate = timeStampMs;
         m_accSigma = accDev;
         m_predictCount = 0;
@@ -109,8 +109,8 @@ public class GPSAccKalmanFilter {
         double Q[] = {
                 posSig, 0.0, covDev, 0.0,
                 0.0, posSig, 0.0, covDev,
-                0.0, 0.0, velSig, 0.0,
-                0.0, 0.0, 0.0, velSig
+                covDev, 0.0, velSig, 0.0,
+                0.0, covDev, 0.0, velSig
         };
         m_kf.Q.setData(Q);
     }
